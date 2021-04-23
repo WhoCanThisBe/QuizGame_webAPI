@@ -1,25 +1,27 @@
 import React from "react";
-import {Match} from "../../src/client/Match";
-import {MemoryRouter} from "react-router-dom";
-import renderer from 'react-test-renderer';
+import { Match } from "../../src/client/Match";
+import { MemoryRouter } from "react-router-dom";
+import renderer from "react-test-renderer";
+import { render } from "@testing-library/react";
 
+test.skip("display quiz", () => {
+  //TODO: make an better test
 
-test.skip("display quiz",() =>{
+  const matchDisplay = (
+    <MemoryRouter>
+      <Match />
+    </MemoryRouter>
+  );
 
-    //TODO: make an better test
+  const tree = renderer.create(matchDisplay).toJSON();
 
-    const matchDisplay = (
-        <MemoryRouter>
-            <Match />
-        </MemoryRouter>
-    );
+  expect(tree).toMatchSnapshot();
+});
 
-    const tree = renderer.create(matchDisplay).toJSON();
-
-    expect(tree).toMatchSnapshot();
-
-})
-
-
-
-
+test("checkQuizDisplayed", () => {
+  render(
+    <MemoryRouter>
+      <Match />
+    </MemoryRouter>
+  );
+});

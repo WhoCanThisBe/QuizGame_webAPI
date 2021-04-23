@@ -1,5 +1,4 @@
-
-export  const NAV_PATH ={
+export const NAV_PATH = {
   HOME: "/",
-  MATCH: "/match"
-}
+  MATCH: "/match",
+};
