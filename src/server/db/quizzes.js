@@ -7,7 +7,7 @@ const quizzes = [
             "Weakly and statically typed",
             "Weakly and dynamically typed",
         ],
-        indexOfRightAnswer: 3
+        indexOfRightAnswer: 0
     },
     {
         question: "In JavaScript, what is the result of the following?\n\n+(!![]+!![]+!![]+!![]+[]+(!![]+!![]))",
@@ -17,7 +17,7 @@ const quizzes = [
             "42",
             "'42'"
         ],
-        indexOfRightAnswer: 2
+        indexOfRightAnswer: 0
     },
     {
         question: "In JavaScript, what is the result of the following?\n\n[3,18,1,2].sort()\n",
@@ -27,7 +27,7 @@ const quizzes = [
             "[18, 1, 2, 3]",
             "Runtime exception"
         ],
-        indexOfRightAnswer: 1
+        indexOfRightAnswer: 0
     },
     {
         question: "In JavaScript, what is the result  of the following?\n\nfalse + true?",
@@ -37,7 +37,7 @@ const quizzes = [
             "'falsetrue'",
             "1"
         ],
-        indexOfRightAnswer: 3
+        indexOfRightAnswer: 0
     },
     {
         question: "What is Babel mainly used for?",

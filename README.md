@@ -51,3 +51,25 @@ On the other hand, clicking on a wrong answer should display an error message.
       whereas the component `<App/>` in `index.jsx`  
       simply uses `<Match/>` and calls `ReactDOM.render()`.
 * [x] Create a new `match-test.jsx` test file for the `<Match/>` component.
+
+
+## Part 5
+* [x] In `client`, create a new `home.jsx`. This should be your home page, with a welcome message,  
+  and a button to go to the `match.jsx` page to a start a new match.
+* [x] React routes between those 2 web pages.
+  * [x] Also handle the case of *404 not found*.
+
+* [x] In `server`, configure a *NodeJS* server with *Express*. It should server static assets 
+  from the `public` folder, and `index.html` for `404 not found` cases.
+  
+* [x] Update your tests to accommodate all the changes done in your frontend code.  
+  Add new tests in `match-test.jsx` to achieve 100% code coverage.
+  
+* [x] In `match.jsx`, handle an actual game with *n* quizzes (e.g., *n=3*).
+  Instead of using `alert()`, now display a victory/defeat message in the page,
+  with a button to start a new match.
+  Starting a new match will create a new selection of *n* quizzes.
+  When you display a quiz, you should also display its index in *n*, i.e., if *n=3*,
+  then for example for the first quiz you should display that it is the 1st out of 3.
+
+* [ ] add test for coverage
