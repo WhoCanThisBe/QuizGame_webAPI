@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`display quiz 1`] = `
+<div
+  className="question"
+  data-testid="questions"
+>
+  <h1>
+    Question (1 / 3): 
+    In JavaScript, what is the result  of the following?
+
+false + true?
+  </h1>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    false
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    true
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    'falsetrue'
+  </button>
+  <button
+    onClick={[Function]}
+    type="button"
+  >
+    1
+  </button>
+</div>
+`;

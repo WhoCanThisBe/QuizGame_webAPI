@@ -43,3 +43,11 @@ On the other hand, clicking on a wrong answer should display an error message.
   The main `index.js` file should import `getRandomQuizzes` from `quizzes.js`.
 * [x] create a react app 
 * [x] Add test for quiz
+
+## Part 4
+
+* [x] Create a new file called `match.jsx`.
+* [x] The component `<Match/>` will deal with rendering a quiz,  
+      whereas the component `<App/>` in `index.jsx`  
+      simply uses `<Match/>` and calls `ReactDOM.render()`.
+* [x] Create a new `match-test.jsx` test file for the `<Match/>` component.
