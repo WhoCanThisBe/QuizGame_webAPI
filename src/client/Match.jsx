@@ -14,7 +14,6 @@ export function Match() {
 
   const startNewMatch = () => {
     const quizzes = getRandomQuizzes(3);
-    console.log(quizzes);
     setVictory(false);
     setDefeat(false);
     setQuiz(quizzes);
@@ -23,7 +22,6 @@ export function Match() {
   };
 
   function handleClick(correct) {
-    console.log({ correct });
     if (!correct) {
       setDefeat(true);
       setCurrentIndex(0);
@@ -35,8 +33,6 @@ export function Match() {
     }
     setCurrentIndex((prevIndex) => prevIndex + 1);
   }
-
-  console.log(quiz);
 
   if (!quiz) {
     return <h1>loading</h1>;
@@ -60,7 +56,7 @@ export function Match() {
       <div className="game-result">
         <h2>Wrong Answer! You Lost!</h2>
         <div className="action">
-          <button className="play new-game-button" onClick={startNewMatch}>
+          <button className="play new-game-button" onClick={startNewMatch} >
             New Match
           </button>
         </div>
@@ -81,6 +77,7 @@ export function Match() {
             type="button"
             key={index}
             onClick={() => handleClick(index === renderQuiz.indexOfRightAnswer)}
+            data-testid={index}
           >
             {alternative}
           </button>
