@@ -30,3 +30,16 @@ Each of the 4 answers should be a clickable button.
 Clicking the right answer should display a victory message (e.g., using
 the JS *alert()* function), and then display a new random quiz.
 On the other hand, clicking on a wrong answer should display an error message.
+
+
+## Part 2 && Part 3
+
+* [x] Split the JS code from previous exercise into two different files: `index.js`
+  and `quizzes.js`.
+  This latter should contain your array of pre-defined quizzes.
+  Create a new function called `getRandomQuizzes`, that takes as input an integer
+  `numberOfQuizzes` and returns a new array of *unique* quizzes chosen at random.
+  It should throw an exception when  `numberOfQuizzes`  is invalid.
+  The main `index.js` file should import `getRandomQuizzes` from `quizzes.js`.
+* [x] create a react app 
+* [x] Add test for quiz
