@@ -91,4 +91,23 @@ On the other hand, clicking on a wrong answer should display an error message.
 
 ## Part 9
 
-* [ ] 
+* [ ] express-session
+* [ ] passport
+* [ ] passport-local
+
+In the REST API, you need new endpoints to handle auth actions like:
+* [ ] header-bar
+* [ ] login
+* [ ] signup
+* [ ] logout
+* [ ] Update your frontend React pages to support auth.
+
+[ ] You also need an endpoint to retrieve the current info on the logged-in
+user: id, and numbers of victories and defeats.
+
+Note 1: you must NOT return the password in the user-info endpoint...
+
+[ ] Add `SuperTest` tests for the auth API. Most of them will just be adaptations
+from the tests used in the lesson examples. 
+
+[ ] The starting of a match should only be possible if a user is logged-in.
