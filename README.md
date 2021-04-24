@@ -91,14 +91,14 @@ On the other hand, clicking on a wrong answer should display an error message.
 
 ## Part 9
 
-* [ ] express-session
+* [x] express-session
 * [ ] passport
 * [ ] passport-local
 
 In the REST API, you need new endpoints to handle auth actions like:
-* [ ] header-bar
+* [x] header-bar
 * [ ] login
-* [ ] signup
+* [x] signup
 * [ ] logout
 * [ ] Update your frontend React pages to support auth.
 

@@ -9,9 +9,9 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  const { username, password } = req.body;
+  const { userId, password } = req.body;
 
-  const authorizedUser = userDatabase.createUser(username, password);
+  const authorizedUser = userDatabase.createUser(userId, password);
 
   if (!authorizedUser) {
     return res.sendStatus(StatusCode.ClientErrorUnauthorized);
@@ -19,7 +19,7 @@ router.post("/signup", (req, res) => {
 
   passport.authenticate("local")(req, res, () => {
     req.session.save((err) => {
-      if (err) res.sendStatus(StatusCode.ClientErrorBadRequest);
+      if (err) res.status(StatusCode.ClientErrorBadRequest).send();
       else res.status(StatusCode.SuccessCreated).send();
     });
   });

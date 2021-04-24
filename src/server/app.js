@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 const app = express();
 const match = require("./routes/match-api");
 const authApi = require("./routes/auth-api");
@@ -12,26 +13,32 @@ const { verifyUser, getUser } = require("./db/users");
 app.use(express.json());
 
 // Express session
-// app.use(
-//     session({
-//       secret: process.env.SESSION_SECRET,
-//       resave: false,
-//       saveUninitialized: false,
-//     })
-// );
+app.use(
+  session({
+    secret: "sdfdfdfdfgdg1111",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-// passport.use(
-//     new LocalStrategy((username, password, done) => {
-//       if (verifyUser(username, password)) {
-//         done(null, getUser(username));
-//       } else {
-//         done(null, false, { message: "Invalid username/password" });
-//       }
-//     })
-// );
+const authFields = {
+  usernameField: "userId",
+  passwordField: "password",
+};
+
+passport.use(
+  new LocalStrategy(authFields, (userId, password, done) => {
+    if (verifyUser(userId, password)) {
+      console.log({ userId });
+      done(null, getUser(userId));
+    } else {
+      console.log("else");
+      done(null, false, { message: "Invalid username/password" });
+    }
+  })
+);
 
 passport.serializeUser((user, done) => done(null, user.id));
-
 passport.deserializeUser((id, done) => {
   const user = getUser(id);
   done(null, user ? user : null);
@@ -40,12 +47,12 @@ passport.deserializeUser((id, done) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Serving static content from ./dist/*
-app.use(express.static("dist"));
-
 //routes
 app.use("/api", match);
 app.use("/api", authApi);
+
+// Serving static content from ./dist/*
+app.use(express.static("dist"));
 
 app.use((req, res, next) => {
   // We only want to send the index.html file when we receive a GET request to "/" or "/quiz" etc. (everything on

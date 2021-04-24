@@ -21,4 +21,5 @@ export const MATCH_ENDPOINT = {
 
 export const USER_AUTH_ENDPOINT = {
   SIGNUP: `${ENDPOINT_TEMPLATE.BASE}/signup`,
+  LOGIN: `${ENDPOINT_TEMPLATE.BASE}/login`,
 };
