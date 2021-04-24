@@ -1,10 +1,15 @@
 import React from "react";
-import { Match, } from "../../src/client/Match";
+import { Match } from "../../src/client/Match";
 import { MemoryRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import {screen, render, fireEvent, waitForElementToBeRemoved, waitFor} from '@testing-library/react';
-import {postJSON} from "../../src/client/lib/http";
-
+import {
+  screen,
+  render,
+  fireEvent,
+  waitForElementToBeRemoved,
+  waitFor,
+} from "@testing-library/react";
+import { postJSON } from "../../src/client/lib/http";
 
 test.skip("display quiz", () => {
   //TODO: make an better test
@@ -20,7 +25,7 @@ test.skip("display quiz", () => {
   expect(tree).toMatchSnapshot();
 });
 
-const quiz1 =  [
+const quiz1 = [
   {
     question: "What kind of language is JavaScript?",
     answers: [
@@ -33,13 +38,13 @@ const quiz1 =  [
   },
   {
     question:
-        "In JavaScript, what is the result of the following?\n\n+(!![]+!![]+!![]+!![]+[]+(!![]+!![]))",
+      "In JavaScript, what is the result of the following?\n\n+(!![]+!![]+!![]+!![]+[]+(!![]+!![]))",
     answers: ["Compilation exception", "Runtime exception", "42", "'42'"],
     indexOfRightAnswer: 0,
   },
   {
     question:
-        "In JavaScript, what is the result of the following?\n\n[3,18,1,2].sort()\n",
+      "In JavaScript, what is the result of the following?\n\n[3,18,1,2].sort()\n",
     answers: [
       "[1, 2, 3, 18]",
       "[1, 18, 2, 3]",
@@ -50,7 +55,7 @@ const quiz1 =  [
   },
   {
     question:
-        "In JavaScript, what is the result  of the following?\n\nfalse + true?",
+      "In JavaScript, what is the result  of the following?\n\nfalse + true?",
     answers: ["false", "true", "'falsetrue'", "1"],
     indexOfRightAnswer: 0,
   },
@@ -70,14 +75,12 @@ jest.mock("../../src/client/lib/http");
 
 // Hook that runs before any tests are executed
 beforeAll(() => {
-    postJSON.mockImplementation(() => Promise.resolve(quiz1));
+  postJSON.mockImplementation(() => Promise.resolve(quiz1));
 });
 
-
-test("checkQuizDisplayed and clicking the wrong answer",async  () => {
-
- //this is for mocking a return av a function call
- //postJSON.mockResolvedValue(quiz1);
+test("checkQuizDisplayed and clicking the wrong answer", async () => {
+  //this is for mocking a return av a function call
+  //postJSON.mockResolvedValue(quiz1);
 
   render(
     <MemoryRouter>
@@ -90,31 +93,24 @@ test("checkQuizDisplayed and clicking the wrong answer",async  () => {
   // We only want to wait for the question to be rendered, and don't need to "re-check" on intervals (e.g: using waitFor)
   expect(await screen.findByText(/question/i)).toBeInTheDocument();
 
-  const wrongAnswer = quiz1[0].answers[3]
+  const wrongAnswer = quiz1[0].answers[3];
 
-  fireEvent.click(screen.getByText(wrongAnswer),{bubbles: true})
+  fireEvent.click(screen.getByText(wrongAnswer), { bubbles: true });
 
   expect(screen.getByText(/lost/i)).toBeInTheDocument();
 });
 
-
-test('clicking the right answer next question when clicked right answer first time',async ()=>{
-
+test("clicking the right answer next question when clicked right answer first time", async () => {
   render(
-      <MemoryRouter>
-        <Match />
-      </MemoryRouter>
+    <MemoryRouter>
+      <Match />
+    </MemoryRouter>
   );
 
   await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   expect(await screen.findByText(/question/i)).toBeInTheDocument();
 
+  fireEvent.click(screen.getByTestId(0), { bubbles: true });
 
-  fireEvent.click(screen.getByTestId(0),{bubbles: true})
-
-  expect(screen.getByText(/question/i))
-
+  expect(screen.getByText(/question/i));
 });
-
-
-

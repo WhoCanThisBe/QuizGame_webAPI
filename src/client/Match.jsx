@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {MATCH_ENDPOINT} from "./constant";
-import {postJSON} from "./lib/http";
+import React, { useEffect, useState } from "react";
+import { MATCH_ENDPOINT } from "./constant";
+import { postJSON } from "./lib/http";
 
 export function Match() {
   const [victory, setVictory] = useState(null);
@@ -9,7 +9,6 @@ export function Match() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [numberOfQuizzes, setNumberOfQuizzes] = useState(null);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     startNewMatch();
@@ -24,21 +23,20 @@ export function Match() {
     setCurrentIndex(0);
   };
 
-  const getRandomQuizzes = async (numberOfQuizzes)  =>{
+  const getRandomQuizzes = async (numberOfQuizzes) => {
     if (numberOfQuizzes < 1) {
       throw "Invalid number of requested quizzes: " + numberOfQuizzes;
     }
 
     let payload;
 
-    try{
+    try {
       payload = await postJSON(MATCH_ENDPOINT.MATCH);
-    }catch (e){
+    } catch (e) {
       setError(e);
     }
     return payload;
-  }
-
+  };
 
   function handleClick(correct) {
     if (!correct) {
@@ -71,12 +69,11 @@ export function Match() {
   }
 
   if (defeat) {
-
     return (
       <div className="game-result">
         <h2>Wrong Answer! You Lost!</h2>
         <div className="action">
-          <button className="play new-game-button" onClick={startNewMatch} >
+          <button className="play new-game-button" onClick={startNewMatch}>
             New Match
           </button>
         </div>

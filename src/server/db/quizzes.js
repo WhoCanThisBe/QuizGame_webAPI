@@ -69,4 +69,4 @@ function getRandomQuizzes(numberOfQuizzes) {
   return Array.from(selection).map((e) => quizzes[e]);
 }
 
-module.exports = {quizzes, getRandomQuizzes};
+module.exports = { quizzes, getRandomQuizzes };

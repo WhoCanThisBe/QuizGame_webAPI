@@ -1,16 +1,35 @@
 export async function postJSON(url, json) {
-    const res = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(json),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    //TODO:better to have this check here instead in the match
-    // resultCheck(res,url);
-    try {
-        return await res.json()
-    } catch (e) {
-        console.log(e)
-    }
+  const response = await fetch(url, {
+    method: "POST",
+    body: JSON.stringify(json),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  resultCheck(response, url);
+  try {
+    return await response.json();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function fetchJson(url) {
+  const res = await fetch(url);
+  resultCheck(res, url);
+  return await res.json();
+}
+
+const resultCheck = (res, url) => {
+  if (!res.ok) {
+    throw new HttpExceptionCode(res, url);
+  }
+};
+
+//TODO: are we using this function
+export class HttpExceptionCode extends Error {
+  constructor(res, url) {
+    super(`loading error for ${url}: ${res.status} ${res.statusText}`);
+    this.status = res.status;
+  }
 }
