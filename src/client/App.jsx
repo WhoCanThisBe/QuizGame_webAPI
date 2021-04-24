@@ -17,13 +17,13 @@ function Header() {
     <header>
       <p className="header-text">You are not logged in</p>
       <div className="action-buttons">
-        <NavLink className="header-logo" to={NAV_PATH.HOME} tabIndex="0">
+        <NavLink className="header-logo" to={NAV_PATH.HOME}>
           Quiz
         </NavLink>
-        <NavLink className="header-button" to={NAV_PATH.LOGIN} tabIndex="0">
+        <NavLink className="header-button" to={NAV_PATH.LOGIN}>
           LogIn
         </NavLink>
-        <NavLink className="header-button" to={NAV_PATH.SIGNUP} tabIndex="0">
+        <NavLink className="header-button" to={NAV_PATH.SIGNUP}>
           SignUp
         </NavLink>
       </div>
@@ -42,11 +42,11 @@ const App = () => {
         <Route path={NAV_PATH.MATCH}>
           <Match />
         </Route>
-        <Route>
-          <Login path={NAV_PATH.LOGIN} />
+        <Route path={NAV_PATH.LOGIN}>
+          <Login />
         </Route>
-        <Route>
-          <Signup path={NAV_PATH.SIGNUP} />
+        <Route path={NAV_PATH.SIGNUP}>
+          <Signup />
         </Route>
         <Route>
           <ErrorView />
