@@ -1,9 +1,10 @@
 import React from "react";
-import { Match } from "../../src/client/Match";
+import { Match, } from "../../src/client/Match";
 import { MemoryRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
 import {screen, render, fireEvent} from "@testing-library/react";
-import { getRandomQuizzes } from "../../src/server/db/quizzes";
+import {postJSON} from "../../src/client/lib/http";
+
 
 test.skip("display quiz", () => {
   //TODO: make an better test
@@ -69,17 +70,21 @@ const quiz1 =  [
 
 
 
-test("checkQuizDisplayed and clicking the wrong answer", () => {
-  jest.mock("../../src/server/db/quizzes");
+test("checkQuizDisplayed and clicking the wrong answer", async () => {
+  jest.mock("src/client/lib/http");
 
 //this is for mocking a return av a function call
-  getRandomQuizzes.mockReturnValue(quiz1);
+  postJSON.mockReturnValue(quiz1);
 
   render(
     <MemoryRouter>
       <Match />
     </MemoryRouter>
   );
+
+
+  await
+
   expect(screen.getByText(/question/i)).toBeInTheDocument();
 
   const wrongAnswer = quiz1[0].answers[3]

@@ -72,4 +72,18 @@ On the other hand, clicking on a wrong answer should display an error message.
   When you display a quiz, you should also display its index in *n*, i.e., if *n=3*,
   then for example for the first quiz you should display that it is the 1st out of 3.
 
-* [ ] add test for coverage
+* [x] add test for coverage
+
+## Part 8
+
+* [x] In your backend, you need to write a REST API to deal with quizzes. Given a list of existing
+  quizzes, at this point you just need to have a `POST` endpoint dealing with the selection
+  and retrieval of a random sample of quizzes (e.g., 3).
+  When in the frontend React app you need to start a new match, you will need to connect
+  to the REST API to get a random sample of quizzes for such match
+  
+* [ ] Add at least one test for your REST API using the `SuperTest` library.    
+  Update all your frontend tests in a way that, when they need to do a `fetch` to the
+  backend, then they should use `SuperTest` to connect to the backend (i.e., by using the utils
+  shown in class to define behavior of `fetch` when running tests in NodeJS).
+  Add enough tests to obtain an overall statement coverage of at least 70%.

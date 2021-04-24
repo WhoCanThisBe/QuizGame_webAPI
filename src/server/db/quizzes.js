@@ -44,7 +44,7 @@ const quizzes = [
   },
 ];
 
-export function getRandomQuizzes(numberOfQuizzes) {
+function getRandomQuizzes(numberOfQuizzes) {
   if (numberOfQuizzes < 1) {
     throw "Invalid number of requested quizzes: " + numberOfQuizzes;
   }
@@ -68,3 +68,5 @@ export function getRandomQuizzes(numberOfQuizzes) {
 
   return Array.from(selection).map((e) => quizzes[e]);
 }
+
+module.exports = {quizzes, getRandomQuizzes};

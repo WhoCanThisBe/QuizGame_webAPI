@@ -1,5 +1,6 @@
-import { getRandomQuizzes } from "../server/db/quizzes";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
+import {MATCH_ENDPOINT} from "./constant";
+import {postJSON} from "./lib/http";
 
 export function Match() {
   const [victory, setVictory] = useState(null);
@@ -7,19 +8,37 @@ export function Match() {
   const [quiz, setQuiz] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [numberOfQuizzes, setNumberOfQuizzes] = useState(null);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
     startNewMatch();
   }, []);
 
-  const startNewMatch = () => {
-    const quizzes = getRandomQuizzes(3);
+  const startNewMatch = async () => {
+    const quizzes = await getRandomQuizzes(3);
     setVictory(false);
     setDefeat(false);
     setQuiz(quizzes);
-    setNumberOfQuizzes(quizzes.length);
+   await setNumberOfQuizzes(quizzes.length);
     setCurrentIndex(0);
   };
+
+  const getRandomQuizzes = async (numberOfQuizzes)  =>{
+    if (numberOfQuizzes < 1) {
+      throw "Invalid number of requested quizzes: " + numberOfQuizzes;
+    }
+
+    let payload;
+
+    try{
+      payload = await postJSON(MATCH_ENDPOINT.MATCH);
+    }catch (e){
+      setError(e);
+    }
+    return payload;
+  }
+
 
   function handleClick(correct) {
     if (!correct) {
@@ -52,6 +71,7 @@ export function Match() {
   }
 
   if (defeat) {
+
     return (
       <div className="game-result">
         <h2>Wrong Answer! You Lost!</h2>
