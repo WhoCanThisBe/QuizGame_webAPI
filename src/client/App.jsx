@@ -15,9 +15,7 @@ import Signup from "./Signup";
 
 function Header({ user, ...props }) {
   const isLoggedIn = !!user;
-  const message = isLoggedIn
-    ? `welcome ${user.userId}`
-    : "You are not logged in";
+  const message = isLoggedIn ? `welcome ${user.id}` : "You are not logged in";
 
   const buttons = isLoggedIn ? (
     <>
@@ -51,15 +49,16 @@ function Header({ user, ...props }) {
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
+    if (!isRegistered) return;
     const fetchUserInfo = async () => {
       const payload = await fetchJson(USER_AUTH_ENDPOINT.USER_INFO);
       setUser(payload);
     };
     fetchUserInfo();
-  }, [user]);
+  }, [isRegistered]);
 
   return (
     <Router>
@@ -72,7 +71,7 @@ const App = () => {
           <Match />
         </Route>
         <Route path={NAV_PATH.LOGIN}>
-          <Login />
+          <Login setLoggedIn={(loggedIn) => setIsRegistered(loggedIn)} />
         </Route>
         <Route path={NAV_PATH.SIGNUP}>
           <Signup />

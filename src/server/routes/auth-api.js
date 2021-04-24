@@ -32,15 +32,21 @@ router.post("/logout", (req, res) => {
 });
 
 router.get("/user", (req, res) => {
-  const { userId } = req.user;
+  const { id } = req.user;
 
-  const user = userDatabase.getUser(userId);
+  const user = userDatabase.getUser(id);
+
+  console.log({ user });
 
   if (!user) return res.sendStatus(StatusCode.ClientErrorNotFound);
 
   const { password, ...userWithoutPassword } = user;
 
-  res.send(StatusCode.SuccessOK).send(userWithoutPassword);
+  res.status(StatusCode.SuccessOK).json({
+    id: "test",
+    victories: 0,
+    defeats: 0,
+  });
 });
 
 module.exports = router;

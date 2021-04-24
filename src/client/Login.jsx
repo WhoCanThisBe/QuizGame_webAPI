@@ -5,14 +5,17 @@ import { useHistory } from "react-router";
 import { useSubmit } from "./customhooks/useSubmit";
 import { postJSON } from "./lib/http";
 
-const Login = () => {
+const Login = ({ setLoggedIn }) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
   const { handleSubmit, submitting, error } = useSubmit(
     () => postJSON(USER_AUTH_ENDPOINT.LOGIN, { userId, password }),
-    () => history.push(NAV_PATH.HOME)
+    () => {
+      setLoggedIn(true);
+      history.push(NAV_PATH.HOME);
+    }
   );
 
   // const errorMsg = error?.includes?.("401")
