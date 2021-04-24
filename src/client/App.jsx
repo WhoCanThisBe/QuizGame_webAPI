@@ -1,40 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   NavLink,
   Route,
   Switch,
 } from "react-router-dom";
-import { NAV_PATH } from "./constant";
+import { NAV_PATH, USER_AUTH_ENDPOINT } from "./constant";
+import { fetchJson } from "./lib/http";
 import { Match } from "./Match";
 import { ErrorView } from "./components/ErrorView";
 import { Home } from "./Home";
 import Login from "./Login";
 import Signup from "./Signup";
 
-function Header() {
+function Header({ user, ...props }) {
+  const isLoggedIn = !!user;
+  const message = isLoggedIn
+    ? `welcome ${user.userId}`
+    : "You are not logged in";
+
+  const buttons = isLoggedIn ? (
+    <>
+      <NavLink className="header-button" to={NAV_PATH.HOME}>
+        LogOut
+      </NavLink>
+    </>
+  ) : (
+    <>
+      <NavLink className="header-button" to={NAV_PATH.LOGIN}>
+        LogIn
+      </NavLink>
+      <NavLink className="header-button" to={NAV_PATH.SIGNUP}>
+        SignUp
+      </NavLink>
+    </>
+  );
+
   return (
     <header>
-      <p className="header-text">You are not logged in</p>
+      <p className="header-text">{message}</p>
       <div className="action-buttons">
         <NavLink className="header-logo" to={NAV_PATH.HOME}>
           Quiz
         </NavLink>
-        <NavLink className="header-button" to={NAV_PATH.LOGIN}>
-          LogIn
-        </NavLink>
-        <NavLink className="header-button" to={NAV_PATH.SIGNUP}>
-          SignUp
-        </NavLink>
+        {buttons}
       </div>
     </header>
   );
 }
 
 const App = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchUserInfo = async () => {
+      const payload = await fetchJson(USER_AUTH_ENDPOINT.USER_INFO);
+      setUser(payload);
+    };
+    fetchUserInfo();
+  }, [user]);
+
   return (
     <Router>
-      <Header />
+      <Header user={user} />
       <Switch>
         <Route exact path={NAV_PATH.HOME}>
           <Home />

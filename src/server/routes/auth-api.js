@@ -31,4 +31,16 @@ router.post("/logout", (req, res) => {
   res.status(StatusCode.SuccessNoContent).send();
 });
 
+router.get("/user", (req, res) => {
+  const { userId } = req.user;
+
+  const user = userDatabase.getUser(userId);
+
+  if (!user) return res.sendStatus(StatusCode.ClientErrorNotFound);
+
+  const { password, ...userWithoutPassword } = user;
+
+  res.send(StatusCode.SuccessOK).send(userWithoutPassword);
+});
+
 module.exports = router;
