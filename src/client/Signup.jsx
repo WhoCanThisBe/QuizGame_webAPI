@@ -15,31 +15,56 @@ const Signup = () => {
     () => history.push("/")
   );
 
-  function doSignUp() {}
+  const isTheSame = password === confirm;
+
+  let confirmMsg = isTheSame ? "ok" : "not the same";
 
   return (
     <div className="center">
       <form onSubmit={handleSubmit}>
-        <div>
-          <p>User Id:</p>
-          <input type="text" value={userId} onChange={setUserId} />
-        </div>
+        <h1>Signup</h1>
+        <label>
+          User Id:
+          <br />
+          <input
+            type="text"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <br />
+        <label>
+          Password:
+          <br />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <br />
+        <label>
+          Confirm:
+          <br />
+          <input
+            type="password"
+            value={confirm}
+            onChange={(e) => onConfirmChange(e.target.value)}
+            required
+          />
+          <div>{confirmMsg}</div>
+          <br />
+        </label>
 
-        <div>
-          <h1>Signup</h1>
-          {/*{error && <p>error.toString</p>}*/}
-          <p>Password:</p>
-          <input type="password" value={password} onChange={setPassword} />
-        </div>
-        <div>
-          <p>Confirm:</p>
-          <input type="password" value={confirm} onChange={onConfirmChange} />
-          {/*<div>{confirmMsg}</div>*/}
-        </div>
-
-        {/*TODO: Invalid userId/password*/}
-
-        <button className="button" onClick={doSignUp}>
+        <button
+          className="button"
+          type={"submit"}
+          disabled={!isTheSame || submitting}
+        >
           Sign Up
         </button>
       </form>
