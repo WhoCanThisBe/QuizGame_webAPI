@@ -25,4 +25,10 @@ router.post("/signup", (req, res) => {
   });
 });
 
+router.post("/logout", (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.status(StatusCode.SuccessNoContent).send();
+});
+
 module.exports = router;
