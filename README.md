@@ -87,3 +87,8 @@ On the other hand, clicking on a wrong answer should display an error message.
   backend, then they should use `SuperTest` to connect to the backend (i.e., by using the utils
   shown in class to define behavior of `fetch` when running tests in NodeJS).
   Add enough tests to obtain an overall statement coverage of at least 70%.
+  
+
+## Part 9
+
+* [ ] 
