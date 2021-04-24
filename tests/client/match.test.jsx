@@ -2,7 +2,7 @@ import React from "react";
 import { Match, } from "../../src/client/Match";
 import { MemoryRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
-import {screen, render, fireEvent} from "@testing-library/react";
+import {screen, render, fireEvent, waitForElementToBeRemoved, waitFor} from '@testing-library/react';
 import {postJSON} from "../../src/client/lib/http";
 
 
@@ -66,50 +66,55 @@ const quiz1 =  [
   },
 ];
 
+jest.mock("../../src/client/lib/http");
+
+// Hook that runs before any tests are executed
+beforeAll(() => {
+    postJSON.mockImplementation(() => Promise.resolve(quiz1));
+});
 
 
+test("checkQuizDisplayed and clicking the wrong answer",async  () => {
 
-
-test("checkQuizDisplayed and clicking the wrong answer", async () => {
-  jest.mock("src/client/lib/http");
-
-//this is for mocking a return av a function call
-  postJSON.mockReturnValue(quiz1);
+ //this is for mocking a return av a function call
+ //postJSON.mockResolvedValue(quiz1);
 
   render(
     <MemoryRouter>
       <Match />
     </MemoryRouter>
   );
+  // passes the loading view
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
 
-
-  await
-
-  expect(screen.getByText(/question/i)).toBeInTheDocument();
+  // We only want to wait for the question to be rendered, and don't need to "re-check" on intervals (e.g: using waitFor)
+  expect(await screen.findByText(/question/i)).toBeInTheDocument();
 
   const wrongAnswer = quiz1[0].answers[3]
 
   fireEvent.click(screen.getByText(wrongAnswer),{bubbles: true})
 
-  expect(screen.getByText(/lost/i)).toBeInTheDocument()
-
+  expect(screen.getByText(/lost/i)).toBeInTheDocument();
 });
 
 
-test('clicking the right answer three times',()=>{
+test('clicking the right answer next question when clicked right answer first time',async ()=>{
 
   render(
       <MemoryRouter>
         <Match />
       </MemoryRouter>
   );
-  expect(screen.getByText(/question/i)).toBeInTheDocument();
+
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
+  expect(await screen.findByText(/question/i)).toBeInTheDocument();
 
 
   fireEvent.click(screen.getByTestId(0),{bubbles: true})
-  fireEvent.click(screen.getByTestId(0),{bubbles: true})
-  fireEvent.click(screen.getByTestId(0),{bubbles: true})
 
-  expect(screen.getByText(/won/i))
+  expect(screen.getByText(/question/i))
 
-})
+});
+
+
+

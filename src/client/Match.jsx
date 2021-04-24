@@ -20,7 +20,7 @@ export function Match() {
     setVictory(false);
     setDefeat(false);
     setQuiz(quizzes);
-   await setNumberOfQuizzes(quizzes.length);
+    setNumberOfQuizzes(quizzes.length);
     setCurrentIndex(0);
   };
 

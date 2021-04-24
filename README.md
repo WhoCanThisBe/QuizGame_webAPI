@@ -82,7 +82,7 @@ On the other hand, clicking on a wrong answer should display an error message.
   When in the frontend React app you need to start a new match, you will need to connect
   to the REST API to get a random sample of quizzes for such match
   
-* [ ] Add at least one test for your REST API using the `SuperTest` library.    
+* [x] Add at least one test for your REST API using the `SuperTest` library.    
   Update all your frontend tests in a way that, when they need to do a `fetch` to the
   backend, then they should use `SuperTest` to connect to the backend (i.e., by using the utils
   shown in class to define behavior of `fetch` when running tests in NodeJS).
