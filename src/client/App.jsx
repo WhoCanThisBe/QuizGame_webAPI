@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
 import {
   BrowserRouter as Router,
   NavLink,
@@ -6,7 +7,7 @@ import {
   Switch,
 } from "react-router-dom";
 import { NAV_PATH, USER_AUTH_ENDPOINT } from "./constant";
-import { fetchJson } from "./lib/http";
+import { fetchJson, postJSON } from "./lib/http";
 import { Match } from "./Match";
 import { ErrorView } from "./components/ErrorView";
 import { Home } from "./Home";
@@ -17,10 +18,15 @@ function Header({ user, ...props }) {
   const isLoggedIn = !!user;
   const message = isLoggedIn ? `welcome ${user.id}` : "You are not logged in";
 
+  const handleLogout = async () => {
+    await postJSON(USER_AUTH_ENDPOINT.LOGOUT);
+    //location.reload();
+  };
+
   const buttons = isLoggedIn ? (
     <>
       <NavLink className="header-button" to={NAV_PATH.HOME}>
-        LogOut
+        <button onClick={handleLogout}>LogOut</button>
       </NavLink>
     </>
   ) : (
