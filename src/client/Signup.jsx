@@ -56,7 +56,7 @@ const Signup = () => {
             onChange={(e) => onConfirmChange(e.target.value)}
             required
           />
-          <div>{confirmMsg}</div>
+          <div>{confirm.length > 0 && confirmMsg}</div>
           <br />
         </label>
 
