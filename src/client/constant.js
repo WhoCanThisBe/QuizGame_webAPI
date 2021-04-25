@@ -17,6 +17,7 @@ const ENDPOINT_TEMPLATE = {
 
 export const MATCH_ENDPOINT = {
   MATCH: `${ENDPOINT_TEMPLATE.BASE}/matches`,
+  STILLGOINGMATCH: `${ENDPOINT_TEMPLATE.BASE}/stillgoingmatch`,
 };
 
 export const USER_AUTH_ENDPOINT = {

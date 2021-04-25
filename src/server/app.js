@@ -29,7 +29,6 @@ const authFields = {
 passport.use(
   new LocalStrategy(authFields, (userId, password, done) => {
     if (verifyUser(userId, password)) {
-      console.log({ userId });
       done(null, getUser(userId));
     } else {
       console.log("else");

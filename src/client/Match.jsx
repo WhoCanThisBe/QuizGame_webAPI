@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MATCH_ENDPOINT } from "./constant";
-import { postJSON } from "./lib/http";
+import { fetchJson, postJSON } from "./lib/http";
 
 export function Match() {
   const [victory, setVictory] = useState(null);
@@ -15,27 +15,19 @@ export function Match() {
   }, []);
 
   const startNewMatch = async () => {
-    const quizzes = await getRandomQuizzes(3);
     setVictory(false);
     setDefeat(false);
-    setQuiz(quizzes);
-    setNumberOfQuizzes(quizzes.length);
+    setQuiz(null);
     setCurrentIndex(0);
-  };
-
-  const getRandomQuizzes = async (numberOfQuizzes) => {
-    if (numberOfQuizzes < 1) {
-      throw "Invalid number of requested quizzes: " + numberOfQuizzes;
-    }
-
-    let payload;
 
     try {
-      payload = await postJSON(MATCH_ENDPOINT.MATCH);
+      await postJSON(MATCH_ENDPOINT.MATCH);
+      const { currentQuiz } = await fetchJson(MATCH_ENDPOINT.STILLGOINGMATCH);
+      setQuiz(currentQuiz);
+      setNumberOfQuizzes(currentQuiz.length);
     } catch (e) {
       setError(e);
     }
-    return payload;
   };
 
   function handleClick(correct) {
@@ -83,17 +75,18 @@ export function Match() {
 
   if (quiz) {
     const renderQuiz = quiz[currentIndex];
+    console.log(quiz);
+    console.log(renderQuiz);
     return (
       <div data-testid={"questions"} className="question">
         <h1>
-          Question ({currentIndex + 1} / {numberOfQuizzes}):{" "}
-          {renderQuiz.question}
+          Question ({currentIndex + 1} / {numberOfQuizzes}): {quiz.question}
         </h1>
-        {renderQuiz.answers.map((alternative, index) => (
+        {quiz.answers.map((alternative, index) => (
           <button
             type="button"
             key={index}
-            onClick={() => handleClick(index === renderQuiz.indexOfRightAnswer)}
+            onClick={() => handleClick(index)}
             data-testid={index}
           >
             {alternative}
