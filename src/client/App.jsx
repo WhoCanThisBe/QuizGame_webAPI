@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { NAV_PATH, USER_AUTH_ENDPOINT } from "./constant";
 import { useSubmit } from "./customhooks/useSubmit";
-import { fetchJson, postJSON } from "./lib/http";
+import { fetchJson, post, postJSON } from "./lib/http";
 import { Match } from "./Match";
 import { ErrorView } from "./components/ErrorView";
 import { Home } from "./Home";
@@ -18,8 +18,8 @@ import Signup from "./Signup";
 function Header({ user, onLogout, ...props }) {
   const history = useHistory();
 
-  const { isSubmitting: isLoggingOut, handleSubmit: handleLogout } = useSubmit(
-    () => postJSON(USER_AUTH_ENDPOINT.LOGOUT),
+  const { handleSubmit: handleLogout } = useSubmit(
+    () => post(USER_AUTH_ENDPOINT.LOGOUT),
     () => {
       onLogout();
       history.push(NAV_PATH.HOME);
@@ -46,9 +46,7 @@ function Header({ user, onLogout, ...props }) {
   if (isLoggedIn) {
     buttons = (
       <>
-        <button onClick={handleLogout} disabled={isLoggingOut}>
-          LogOut
-        </button>
+        <button onClick={handleLogout}>LogOut</button>
       </>
     );
   }
@@ -82,7 +80,6 @@ const App = () => {
 
   // TODO: Remove/change this useEffect after setting up WebSockets
   useEffect(() => {
-    //if (!isRegistered) return;
     fetchUserInfo();
   }, [isRegistered]);
 

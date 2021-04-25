@@ -84,7 +84,7 @@ export function Match() {
     return (
       <div data-testid={"questions"} className="question">
         <h1>
-          Question ({currentIndex + 1} / {numberOfQuizzes}):{" "}
+          Question ({currentIndex + 1} / {numberOfQuizzes}): {quiz.question}
         </h1>
         {quiz.answers.map((alternative, index) => (
           <button

@@ -8,7 +8,26 @@ export async function postJSON(url, json) {
   });
 
   resultCheck(response, url);
+
   return await response.json();
+}
+
+export async function post(url, json = null) {
+  const standardInitOpts = {
+    method: "POST",
+    body: JSON.stringify(json),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const response = await fetch(
+    url,
+    json ? standardInitOpts : { method: "POST" }
+  );
+
+  resultCheck(response, url);
+  return response.status;
 }
 
 export async function fetchJson(url) {

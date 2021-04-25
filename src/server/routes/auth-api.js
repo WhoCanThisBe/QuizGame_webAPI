@@ -5,7 +5,7 @@ const { StatusCode } = require("status-code-enum");
 const userDatabase = require("../db/users");
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.status(204).json({});
+  res.status(StatusCode.SuccessNoContent).send();
 });
 
 router.post("/signup", (req, res) => {
@@ -14,13 +14,13 @@ router.post("/signup", (req, res) => {
   const authorizedUser = userDatabase.createUser(userId, password);
 
   if (!authorizedUser) {
-    return res.sendStatus(StatusCode.ClientErrorUnauthorized).json({});
+    return res.sendStatus(StatusCode.ClientErrorUnauthorized);
   }
 
   passport.authenticate("local")(req, res, () => {
     req.session.save((err) => {
-      if (err) res.status(StatusCode.ClientErrorBadRequest).json({});
-      else res.status(StatusCode.SuccessCreated).json({});
+      if (err) res.sendStatus(StatusCode.ClientErrorBadRequest);
+      else res.sendStatus(StatusCode.SuccessCreated);
     });
   });
 });
@@ -28,7 +28,7 @@ router.post("/signup", (req, res) => {
 router.post("/logout", (req, res) => {
   req.logout();
   req.session.destroy();
-  res.status(StatusCode.SuccessNoContent).json({});
+  res.sendStatus(StatusCode.SuccessNoContent);
 });
 
 router.get("/user", (req, res) => {

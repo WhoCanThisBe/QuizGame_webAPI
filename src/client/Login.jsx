@@ -3,7 +3,7 @@ import { StatusCode } from "status-code-enum";
 import { NAV_PATH, USER_AUTH_ENDPOINT } from "./constant";
 import { useHistory } from "react-router";
 import { useSubmit } from "./customhooks/useSubmit";
-import { postJSON } from "./lib/http";
+import { post, postJSON } from "./lib/http";
 
 const Login = ({ setLoggedIn }) => {
   const [userId, setUserId] = useState("");
@@ -11,7 +11,7 @@ const Login = ({ setLoggedIn }) => {
   const history = useHistory();
 
   const { handleSubmit, submitting, error } = useSubmit(
-    () => postJSON(USER_AUTH_ENDPOINT.LOGIN, { userId, password }),
+    () => post(USER_AUTH_ENDPOINT.LOGIN, { userId, password }),
     () => {
       setLoggedIn();
       history.push(NAV_PATH.HOME);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { postJSON } from "./lib/http";
+import { post, postJSON } from "./lib/http";
 import { NAV_PATH, USER_AUTH_ENDPOINT } from "./constant";
 import { useSubmit } from "./customhooks/useSubmit";
 
@@ -11,7 +11,7 @@ const Signup = ({ setLoggedIn, ...props }) => {
   const history = useHistory();
 
   const { handleSubmit, submitting, error } = useSubmit(
-    () => postJSON(USER_AUTH_ENDPOINT.SIGNUP, { userId, password }),
+    () => post(USER_AUTH_ENDPOINT.SIGNUP, { userId, password }),
     () => {
       // TODO: Remove/change this after setting up WebSockets
       // Trigger fetching of userInfo in App
