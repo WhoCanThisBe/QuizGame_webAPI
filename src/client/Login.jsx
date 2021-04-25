@@ -13,14 +13,15 @@ const Login = ({ setLoggedIn }) => {
   const { handleSubmit, submitting, error } = useSubmit(
     () => postJSON(USER_AUTH_ENDPOINT.LOGIN, { userId, password }),
     () => {
-      setLoggedIn(true);
+      setLoggedIn();
       history.push(NAV_PATH.HOME);
     }
   );
 
-  // const errorMsg = error?.includes?.("401")
-  //   ? "Invalid username/password"
-  //   : error?.toString?.();
+  const errorMsg =
+    error?.status === StatusCode.ClientErrorUnauthorized
+      ? "Invalid username/password"
+      : error?.toString();
 
   return (
     <div className="center">
@@ -50,13 +51,7 @@ const Login = ({ setLoggedIn }) => {
         </label>
         <br />
         <br />
-        {error && (
-          <p>
-            {error.message.includes(401)
-              ? "Invalid username/password"
-              : error.toString()}
-          </p>
-        )}
+        {error && <p>{errorMsg}</p>}
 
         {/*So no one can submit while one is submitting*/}
         <button

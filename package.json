@@ -2,14 +2,13 @@
   "name": "quizgamewebapi",
   "version": "1.0.0",
   "description": "This is a part of a lecture in WebApi I attended, this is a repeated work for\r myself for preparing to the exam. So the packages.json are already done for future work in the beginning\r of the commit\r # Quiz Game",
-  "main": "jest.config.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "start": "concurrently 'npm:server' 'npm:parcel'",
-    "parcel": "parcel src/client/index.html",
-    "server": "nodemon src/server/server.js --watch src/server",
+    "parcel": "parcel watch src/client/index.html",
+    "server": "nodemon --watch src/server src/server/server.js",
     "prettier": "prettier --write src tests",
     "test": "jest"
   },

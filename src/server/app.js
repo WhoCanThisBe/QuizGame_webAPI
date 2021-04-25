@@ -31,7 +31,6 @@ passport.use(
     if (verifyUser(userId, password)) {
       done(null, getUser(userId));
     } else {
-      console.log("else");
       done(null, false, { message: "Invalid username/password" });
     }
   })

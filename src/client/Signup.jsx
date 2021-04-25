@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { postJSON } from "./lib/http";
-import { USER_AUTH_ENDPOINT } from "./constant";
+import { NAV_PATH, USER_AUTH_ENDPOINT } from "./constant";
 import { useSubmit } from "./customhooks/useSubmit";
 
-const Signup = () => {
+const Signup = ({ setLoggedIn, ...props }) => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, onConfirmChange] = useState("");
@@ -12,7 +12,12 @@ const Signup = () => {
 
   const { handleSubmit, submitting, error } = useSubmit(
     () => postJSON(USER_AUTH_ENDPOINT.SIGNUP, { userId, password }),
-    () => history.push("/")
+    () => {
+      // TODO: Remove/change this after setting up WebSockets
+      // Trigger fetching of userInfo in App
+      setLoggedIn();
+      history.push(NAV_PATH.HOME);
+    }
   );
 
   const isTheSame = password === confirm;
@@ -59,6 +64,8 @@ const Signup = () => {
           <div>{confirm.length > 0 && confirmMsg}</div>
           <br />
         </label>
+
+        {error && <p>{error.toString()}</p>}
 
         <button
           className="button"
