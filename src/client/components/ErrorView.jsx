@@ -1,10 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { NAV_PATH } from "../constant";
 
-export function ErrorView() {
+export function ErrorView({ error }) {
+  if (!error) return <></>;
+
+  if (error.status === 401) {
+    return (
+      <div>
+        <h2>Your not logged in, please log-in to continue</h2>
+        <Link to={NAV_PATH.LOGIN}>
+          <button>To login Page</button>
+        </Link>
+      </div>
+    );
+  }
+
+  if (error.status === 404) {
+    return (
+      <div>
+        <h1>Not Found</h1>
+        <Link to={NAV_PATH.HOME}>
+          <button>Return to HomePage</button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <h2>NOT FOUND: 404</h2>
-      <p>ERROR: the page you requested in not available.</p>
+      <h1>{error.toString()}</h1>
+      <Link to={NAV_PATH.HOME}>
+        <button>Return to HomePage</button>
+      </Link>
     </div>
   );
 }

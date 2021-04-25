@@ -28,7 +28,7 @@ function resetAllUsers() {
   users.clear();
 }
 
-function endMatch(userID, setVictory) {
+function reportEndOfMatch(userID, setVictory) {
   const user = getUser(userID);
   if (!user) throw "Invalid userId: " + userID;
 
@@ -41,5 +41,5 @@ module.exports = {
   verifyUser,
   createUser,
   resetAllUsers,
-  endMatch,
+  reportEndOfMatch,
 };

@@ -1,51 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { MATCH_ENDPOINT } from "./constant";
 import { fetchJson, postJSON } from "./lib/http";
+import { ErrorView } from "./components/ErrorView";
 
 export function Match() {
   const [victory, setVictory] = useState(null);
   const [defeat, setDefeat] = useState(null);
   const [quiz, setQuiz] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [numberOfQuizzes, setNumberOfQuizzes] = useState(null);
   const [error, setError] = useState(null);
-
+  const [numberOfQuizzes, setNumberOfQuizzes] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     startNewMatch();
   }, []);
 
   const startNewMatch = async () => {
     setVictory(false);
-    setDefeat(false);
     setQuiz(null);
+    setDefeat(false);
     setCurrentIndex(0);
+    setQuiz(null);
 
     try {
       await postJSON(MATCH_ENDPOINT.MATCH);
-      const { currentQuiz } = await fetchJson(MATCH_ENDPOINT.STILLGOINGMATCH);
+      const { numberOfQuizzes, currentQuiz } = await fetchJson(
+        MATCH_ENDPOINT.STILLGOINGMATCH
+      );
       setQuiz(currentQuiz);
-      setNumberOfQuizzes(currentQuiz.length);
+      setNumberOfQuizzes(numberOfQuizzes);
     } catch (e) {
       setError(e);
     }
   };
 
-  function handleClick(correct) {
-    if (!correct) {
-      setDefeat(true);
-      setCurrentIndex(0);
-      return;
+  const handleClick = async (index) => {
+    try {
+      const data = await postJSON(MATCH_ENDPOINT.STILLGOINGMATCH, {
+        selectedAnswer: index,
+      });
+      setVictory(data.victory);
+      setDefeat(data.defeat);
+      setQuiz(data.currentQuiz);
+      setCurrentIndex(data.currentIndex);
+    } catch (e) {
+      setError(e);
     }
-    if (currentIndex === numberOfQuizzes - 1) {
-      setVictory(true);
-      return;
-    }
-    setCurrentIndex((prevIndex) => prevIndex + 1);
+  };
+
+  if (error) {
+    return <ErrorView error={error} />;
   }
 
-  if (!quiz) {
-    return <h1>loading</h1>;
-  }
+  if (!quiz) return <h1>loading</h1>;
 
   if (victory) {
     return (
@@ -74,13 +80,11 @@ export function Match() {
   }
 
   if (quiz) {
-    const renderQuiz = quiz[currentIndex];
     console.log(quiz);
-    console.log(renderQuiz);
     return (
       <div data-testid={"questions"} className="question">
         <h1>
-          Question ({currentIndex + 1} / {numberOfQuizzes}): {quiz.question}
+          Question ({currentIndex + 1} / {numberOfQuizzes}):{" "}
         </h1>
         {quiz.answers.map((alternative, index) => (
           <button

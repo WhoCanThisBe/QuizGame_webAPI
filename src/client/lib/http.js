@@ -7,16 +7,8 @@ export async function postJSON(url, json) {
     },
   });
 
-  console.log({ response });
-
-  const hasAttachedHeaders = Object.keys(response.headers).length > 0;
-
-  if (hasAttachedHeaders) {
-    console.log("Headers on response: ", response.headers);
-  }
-
   resultCheck(response, url);
-  return hasAttachedHeaders ? await response.json() : response.status;
+  return await response.json();
 }
 
 export async function fetchJson(url) {

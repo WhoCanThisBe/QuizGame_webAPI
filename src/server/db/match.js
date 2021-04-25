@@ -1,11 +1,11 @@
 const { getRandomQuizzes } = require("./quizzes");
-const { endMatch } = require("./users");
+const { reportEndOfMatch } = require("./users");
 
 const matches = new Map();
 let counter = 0;
 
 const createMatch = (userId, numberOfQuizzes) => {
-  if (matches.get(userId)) endMatch(userId, false);
+  if (matches.get(userId)) reportEndOfMatch(userId, false);
 
   const match = {
     id: counter++,
@@ -22,12 +22,12 @@ const getMatch = (userId) => {
   return matches.get(userId);
 };
 
-function deleteMatch(userId) {
+function removeMatch(userId) {
   matches.delete(userId);
 }
 
 module.exports = {
   createMatch,
   getMatch,
-  deleteMatch,
+  removeMatch,
 };
